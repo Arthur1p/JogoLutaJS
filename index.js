@@ -8,68 +8,19 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 
 const gravidade = 0.7
 
-class Sprite {
-    constructor({position, velocidade, color = 'red', offset}) {
-        this.position = position
-        this.velocidade = velocidade
-        this.height = 150
-        this.width = 50
-        this.ultimaTecla
-        this.ataqueArea = {
-            position: {
-                x: this.position.x,
-                y: this.position.y
-            },
-            offset,
-            width: 100,
-            height: 50
-        }
-        this.color = color
-        this.atacando
-        this.vida = 100
-    }
 
-    desenho(){
-        c.fillStyle = this.color
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-
-        //Ataque
-        if(this.atacando){
-            c.fillStyle = "yellow"
-            c.fillRect(
-                this.ataqueArea.position.x,
-                this.ataqueArea.position.y,
-                this.ataqueArea.width,
-                this.ataqueArea.height
-            )
-        }
-    }
-
-    update(){
-        this.desenho()
-        this.ataqueArea.position.x = this.position.x + this.ataqueArea.offset.x
-        this.ataqueArea.position.y = this.position.y
-        
-        this.position.x += this.velocidade.x
-        this.position.y += this.velocidade.y
-
-        if (this.position.y + this.height + this.velocidade.y >= canvas.height){
-            this.velocidade.y = 0
-        } else this.velocidade.y += gravidade
-    }
-
-    ataque(){
-        this.atacando = true
-        setTimeout(() => {
-            this.atacando = false
-        }, 100)
-    }
-}
-
-const jogador = new Sprite({
+const background = new Sprite({
     position: {
-    x: 0,
-    y: 0
+        x: 0,
+        y: 0
+    },
+    imageSrc: './img/background/background1.png'
+})
+
+const jogador = new Lutador({
+    position: {
+        x: 0,
+        y: 0
     },
     velocidade: {
         x: 0,
@@ -83,7 +34,7 @@ const jogador = new Sprite({
 
 jogador.desenho()
 
-const inimigo = new Sprite({
+const inimigo = new Lutador({
     position: {
     x: 400,
     y: 100
@@ -125,16 +76,32 @@ function colisaoRetangulo({ retangulo1, retangulo2}){
     )
 }
 
-let tempo = 10
+function determinarVencedor({jogador, inimigo, tempoId}){
+    clearTimeout(tempoId)
+    document.querySelector("#displayText").style.display = 'flex'
+    if(jogador.vida === inimigo.vida){
+        document.querySelector("#displayText").innerHTML = 'Empate!'
+
+    } else if (jogador.vida > inimigo.vida){
+        document.querySelector("#displayText").innerHTML = 'Jogador 1 venceu!'
+
+    } else if (inimigo.vida > jogador.vida){
+        document.querySelector("#displayText").innerHTML = 'Jogador 2 venceu!'
+    }
+}
+
+let tempo = 20
+let tempoId
 function diminuirTempo(){
     
     if(tempo > 0){
-        setTimeout(diminuirTempo, 1000)
+        tempoId = setTimeout(diminuirTempo, 1000)
         tempo --
         document.querySelector('#tempo').innerHTML = tempo
     }
-    if(jogador.vida === inimigo.vida){
-        
+    if(tempo === 0){
+
+        determinarVencedor({jogador, inimigo, tempoId})
     }
 }
 diminuirTempo()
@@ -143,6 +110,7 @@ function animar(){
     window.requestAnimationFrame(animar)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
+    background.update()
     jogador.update()
     inimigo.update()
 
@@ -191,6 +159,11 @@ function animar(){
         jogador.vida -= 20
         document.querySelector('#vidaJogador').style.width = jogador.vida + '%'
         
+    }
+
+    //Acabar jogo com 0 vida
+    if (inimigo.vida <= 0 || jogador.vida <= 0){
+        determinarVencedor({jogador, inimigo, tempoId})
     }
 
 }

@@ -41,11 +41,7 @@
                 flex-shrink: 0;
                 align-items: center;
                 justify-content: center;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                display: none">
+                display: flex;">
                 10
             </div>
             <!--Vida inimigo-->
@@ -65,16 +61,23 @@
             </div>
             
         </div>
-        <div style="
+        <div
+            id="displayText" 
+            style="
             position: absolute;
             color: white;
-            display: flex;
             align-items: center;
-            justify-content:center;">
-            Tie
+            justify-content:center;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: none;">
+            Empate
         </div>
         <canvas></canvas>
     </div>
 
+    <script src="js/classes.js"></script>
     <script src="index.js"></script>
 </body>
