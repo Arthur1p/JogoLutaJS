@@ -1,3 +1,80 @@
-<canvas></canvas>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<script src="index.js"></script>
+    </style>
+
+</head>
+
+
+<body>
+    <div style="position: relative; display: inline-block;">
+        <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
+                <!--Vida jogador-->
+                <div style="
+                    position: relative;
+                    height: 30px;
+                    width: 100%;
+                    display: flex;
+                    justify-content:flex-end;">
+                <div
+                 style="background-color:yellow; height: 30px; width: 100%;">
+                </div>
+                <div id="vidaJogador"
+                     style=
+                     "position: absolute;
+                      background:blue;
+                      top: 0;
+                      right: 0;
+                      bottom: 0;
+                      width: 100%;">
+                </div>
+            </div>
+            <!--Tempo-->
+            <div id="tempo"
+                style="
+                background-color: red;
+                width: 100px;
+                height: 100px;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: none">
+                10
+            </div>
+            <!--Vida inimigo-->
+            <div style="position: relative; height: 30px; width: 100%">
+                <div
+                style="background-color:yellow; height: 30px;">
+                </div>
+                <div id="vidaInimiga"
+                    style=
+                    "position: absolute;
+                    background:blue;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0">
+                </div>
+            </div>
+            
+        </div>
+        <div style="
+            position: absolute;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content:center;">
+            Tie
+        </div>
+        <canvas></canvas>
+    </div>
+
+    <script src="index.js"></script>
+</body>
