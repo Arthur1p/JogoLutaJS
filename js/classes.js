@@ -5,6 +5,7 @@ class Sprite {
         this.width = 50
         this.image = new Image()
         this.image.src = imageSrc
+        
     }
 
     desenho(){
